@@ -5,12 +5,28 @@ public class Produto {
     private int quantidade;
     private int codigo;
 
-public Produto(String nome, double preco, int quantidade, int codigo){
-    this.nome = nome;
-    this.preco = preco;
-    this.quantidade = quantidade;
-    this.codigo = codigo;    
-}
+    public Produto(String nome, double preco, int quantidade, int codigo) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+        this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public double getCodigo() {
+        return codigo;
+    }
 
     @Override
     public String toString() {
