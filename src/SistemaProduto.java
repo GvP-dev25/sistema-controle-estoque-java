@@ -173,10 +173,21 @@ public class SistemaProduto {
 
         }
         return false;
-
-
-
-
     }
+
+public boolean excluirProduto (String nome){
+    for(int i = 0; i < produtos.size(); i ++){
+        if(produtos.get(i).getNome().equalsIgnoreCase(nome)){
+            produtos.remove(i);
+            return true;
+        }
+           }
+
+ return false;
+
+}
+
+
+
 
 }

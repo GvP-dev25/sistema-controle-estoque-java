@@ -24,13 +24,26 @@ public class Main {
                 quantStr = JOptionPane.showInputDialog(null, "Nova quantidade: ");
                 int quant = Integer.parseInt(quantStr);
                 boolean atualizado = sistema.atualizarQuant(nome, quant);
-                if(atualizado == true){
+                if(atualizado){
                     JOptionPane.showMessageDialog(null, "Quantidade Atualizada.");
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Produto não encontrado.");
                 }
             } else if (opcao == 4) {
+            String nome;
+
+            nome = JOptionPane.showInputDialog(null, "Nome produto:");
+
+            boolean excluir = sistema.excluirProduto(nome);
+
+            if(excluir){
+                JOptionPane.showMessageDialog(null, "Produto excluido com sucesso!");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+            }
+
             } else if (opcao == 5) {
             } else if (opcao == 6) {
             }
