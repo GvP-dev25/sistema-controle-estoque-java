@@ -29,70 +29,125 @@ public class Main {
 
     public static void main(String[] args) {
         ArrayList<Produto> produtos = new ArrayList<>();
+        String opcaoStr;
+        int opcao = 0;
 
-        int opcao;
-        boolean nomeExiste;
+        do {
+            try {
 
-        try{
-            do{
+                opcaoStr = JOptionPane.showInputDialog(null, "1 - Cadastrar Produto" +
+                        "\n 2 - Listar Produto" +
+                        "\n 3 - Atualizar Quantidade" +
+                        "\n 4 - Remover Produto" +
+                        "\n 5 - Buscar Produto" +
+                        "\n 6 - Sair");
 
-        opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "1 - Cadastrar Produto" +
-                "\n 2 - Listar Produto" +
-                "\n 3 - Atualizar Quantidade" +
-                "\n 4 - Remover Produto" +
-                "\n 5 - Buscar Produto" +
-                "\n 6 - Sair"));
-
-
-
-
-        if (opcao == 1) {
-            String codigoStr, precoStr, nome, quantStr;
-            int codigo, quant;
-            double preco;
-
-
-                        do {
-                codigoStr = JOptionPane.showInputDialog(null, "Digite o código do produto: ");
-                codigo = Integer.parseInt(codigoStr);
-
-                nomeExiste = verificarcodigo(produtos, codigo);
-                
-                if(nomeExiste){
-                    JOptionPane.showMessageDialog(null, "Codigo já existe!.");
-
+                if (opcaoStr == null) {
+                    JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                    break;
                 }
-            } while (nomeExiste);
+                opcao = Integer.parseInt(opcaoStr);
 
-            do {
-                nome = JOptionPane.showInputDialog(null, "Digite o nome do produto: ");
-                 nomeExiste = verificarnome(produtos, nome);
+                if (opcao == 1) {
+                    boolean nomeExiste = false, codigoExiste = false, valido = false;
+                    String codigoStr, precoStr, nome, quantStr;
+                    int codigo = 0, quant = 0;
+                    double preco = 0;
 
-                if(nomeExiste){
-                    JOptionPane.showMessageDialog(null, "Nome já existe!.");
+                    do {
+                        valido = false;
+                        codigoStr = JOptionPane.showInputDialog("Digite o código do produto:");
+                        if (codigoStr == null) {
+                            JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                            return;
+                        }
 
-               }
-            } while (nomeExiste);
+                        if (!codigoStr.matches("\\d+")) {
+                            JOptionPane.showMessageDialog(null, "Digite apenas números.");
+                            continue;
+                        }
+                        codigo = Integer.parseInt(codigoStr);
+                        codigoExiste = verificarcodigo(produtos, codigo);
 
-            precoStr = JOptionPane.showInputDialog(null, "Digite o preço: ");
-            preco = Double.parseDouble(precoStr);
+                        if (codigoExiste) {
+                            JOptionPane.showMessageDialog(null, "Código já existe!");
+                        } else {
+                            valido = true;
+                        }
 
-            quantStr = JOptionPane.showInputDialog(null, "Digite a quantidade: ");
-            quant = Integer.parseInt(quantStr);
-            produtos.add(new Produto(nome, preco, quant, codigo));
+                    } while (!valido);
 
-        } else if (opcao == 2) {
-        } else if (opcao == 3) {
-        } else if (opcao == 4) {
-        } else if (opcao == 5) {
-        } else if (opcao == 6) {
-        }
+                    do {
+                        valido = false;
+                        nome = JOptionPane.showInputDialog("Digite o nome do produto:");
+                        if (nome == null) {
+                            JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                            return;
+                        }
 
-    }while(opcao != 6);
+                        if (nome.matches(".*\\d.*")) {
+                            JOptionPane.showMessageDialog(null, "Não é permitido números no nome.");
 
-    }catch(NumberFormatException e){
-        JOptionPane.showMessageDialog(null, "Digite apenas opções válidas...", "ERRO", JOptionPane.ERROR_MESSAGE);
-    }
+                            continue;
+                        }
+                        nomeExiste = verificarnome(produtos, nome);
+
+                        if (nomeExiste) {
+                            JOptionPane.showMessageDialog(null, "Nome já existe!");
+                        } else {
+                            valido = true;
+                        }
+
+                    } while (!valido);
+                    do {
+                        valido = false;
+                        precoStr = JOptionPane.showInputDialog(null, "Digite o preço: ");
+                        
+                        if (precoStr == null) {
+                            JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                            return;
+                        }
+                        precoStr = precoStr.replace(",", ".");
+                        if (precoStr.matches("\\d+(\\.\\d+)?")) {
+                            preco = Double.parseDouble(precoStr);
+                            valido = true;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Digite apenas números.");
+                        }
+
+                    } while (!valido);
+
+                    do {
+                        valido = false;
+                        quantStr = JOptionPane.showInputDialog(null, "Digite a quantidade: ");
+                        if (quantStr == null) {
+                            JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                            return;
+                        }
+                        if (quantStr.matches("\\d+")) {
+                            quant = Integer.parseInt(quantStr);
+                            valido = true;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Digite apenas números.");
+                        }
+
+                    } while (!valido);
+                    produtos.add(new Produto(nome, preco, quant, codigo));
+
+                } else if (opcao == 2) {
+                } else if (opcao == 3) {
+                } else if (opcao == 4) {
+                } else if (opcao == 5) {
+                } else if (opcao == 6) {
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite apenas opções válidas...", "ERRO",
+                        JOptionPane.ERROR_MESSAGE);
+                continue;
+            }
+
+        } while (opcao != 6);
+
     }
 
 }
