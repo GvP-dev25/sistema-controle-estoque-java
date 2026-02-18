@@ -148,21 +148,35 @@ public class SistemaProduto {
         produtos.add(novo);
     }
 
-public void listarProduto(){
-    String mensagem = "";
-    if(produtos.isEmpty()){
-        JOptionPane.showMessageDialog(null, "Não tem nenhum produto cadastrado.");
-        return;
+    public void listarProduto() {
+        String mensagem = "";
+        if (produtos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não tem nenhum produto cadastrado.");
+            return;
+        }
+
+        for (Produto p : produtos) {
+            mensagem += p.toString() + "\n\n";
+        }
+        JOptionPane.showMessageDialog(null, mensagem);
     }
 
-for(Produto p : produtos){
-    mensagem += p.toString() + "\n\n";
-}
-JOptionPane.showMessageDialog(null, mensagem);
-}
+
+    public boolean atualizarQuant(String nome, int quant){
+
+               
+        for(Produto p : produtos){
+            if(p.getNome().equalsIgnoreCase(nome)){
+                p.setQuantidade(quant);
+                return true;
+            }
+
+        }
+        return false;
 
 
 
 
+    }
 
 }

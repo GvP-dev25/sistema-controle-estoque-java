@@ -28,6 +28,10 @@ public class Produto {
         return codigo;
     }
 
+    public void setQuantidade(int quantidade){
+        this.quantidade = quantidade;
+    }
+
     @Override
     public String toString() {
         return "Código: " + codigo +
