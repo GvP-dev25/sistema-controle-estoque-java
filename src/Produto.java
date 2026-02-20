@@ -24,7 +24,7 @@ public class Produto {
         return quantidade;
     }
 
-    public double getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 

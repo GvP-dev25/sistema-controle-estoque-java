@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class SistemaProduto {
     private ArrayList<Produto> produtos = new ArrayList<>();
+    private ProdutoDAO dao = new ProdutoDAO();
 
     public SistemaProduto() {
     }
@@ -145,17 +146,19 @@ public class SistemaProduto {
 
         } while (!valido);
         Produto novo = new Produto(nome, preco, quant, codigo);
-        produtos.add(novo);
+        dao.inserir(novo);
+        JOptionPane.showMessageDialog(null, "Produto cadastrado no banco com sucesso!");
     }
 
     public void listarProduto() {
+        ArrayList<Produto> lista = dao.listar();
         String mensagem = "";
-        if (produtos.isEmpty()) {
+        if (lista.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Não tem nenhum produto cadastrado.");
             return;
         }
 
-        for (Produto p : produtos) {
+        for (Produto p : lista) {
             mensagem += p.toString() + "\n\n";
         }
         JOptionPane.showMessageDialog(null, mensagem);
@@ -220,7 +223,7 @@ public class SistemaProduto {
                 return;
             }
             else if(nome.matches(".*\\d+.*")){
-                JOptionPane.showMessageDialog(null, "Invalido.");
+                JOptionPane.showMessageDialog(null, ".");
                 return;
             }
             quantStr = JOptionPane.showInputDialog(null, "Nova quantidade: ");

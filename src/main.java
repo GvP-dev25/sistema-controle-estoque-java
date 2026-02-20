@@ -29,9 +29,7 @@ public class Main {
                     sistema.BuscarProduto();
                     break;
                 case 6:
-
                     break;
-
                 default:
                     JOptionPane.showMessageDialog(null, "Digite apenas opções validas.");
                     return;
