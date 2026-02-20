@@ -11,43 +11,31 @@ public class Main {
         do {
             opcao = sistema.menu();
 
-            if (opcao == 1) {
-                sistema.CadastrarProduto();
-                continue;
-            } else if (opcao == 2) {
-                sistema.listarProduto();
-                continue;
-            } else if (opcao == 3) {
-                String quantStr;
-                
-                String nome = JOptionPane.showInputDialog(null, "Digite o nome do produto: ");
-                quantStr = JOptionPane.showInputDialog(null, "Nova quantidade: ");
-                int quant = Integer.parseInt(quantStr);
-                boolean atualizado = sistema.atualizarQuant(nome, quant);
-                if(atualizado){
-                    JOptionPane.showMessageDialog(null, "Quantidade Atualizada.");
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Produto não encontrado.");
-                }
-            } else if (opcao == 4) {
-            String nome;
+            switch (opcao) {
+                case 1:
+                    sistema.CadastrarProduto();
+                    break;
+                case 2:
+                    sistema.listarProduto();
+                    break;
+                case 3:
+                    sistema.AtualizarQuantidade();
+                    break;
+                case 4:
+                    sistema.ExcrluirProduto();
+                    break;
 
-            nome = JOptionPane.showInputDialog(null, "Nome produto:");
+                case 5:
+                    sistema.BuscarProduto();
+                    break;
+                case 6:
 
-            boolean excluir = sistema.excluirProduto(nome);
+                    break;
 
-            if(excluir){
-                JOptionPane.showMessageDialog(null, "Produto excluido com sucesso!");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
-            }
-
-            } else if (opcao == 5) {
-            } else if (opcao == 6) {
+                default:
+                    JOptionPane.showMessageDialog(null, "Digite apenas opções validas.");
+                    return;
             }
         } while (opcao != 6);
     }
-
 }

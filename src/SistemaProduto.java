@@ -161,12 +161,10 @@ public class SistemaProduto {
         JOptionPane.showMessageDialog(null, mensagem);
     }
 
+    public boolean atualizarQuant(String nome, int quant) {
 
-    public boolean atualizarQuant(String nome, int quant){
-
-               
-        for(Produto p : produtos){
-            if(p.getNome().equalsIgnoreCase(nome)){
+        for (Produto p : produtos) {
+            if (p.getNome().equalsIgnoreCase(nome)) {
                 p.setQuantidade(quant);
                 return true;
             }
@@ -175,19 +173,150 @@ public class SistemaProduto {
         return false;
     }
 
-public boolean excluirProduto (String nome){
-    for(int i = 0; i < produtos.size(); i ++){
-        if(produtos.get(i).getNome().equalsIgnoreCase(nome)){
-            produtos.remove(i);
-            return true;
+    public boolean excluirProduto(String nome) {
+        for (int i = 0; i < produtos.size(); i++) {
+            if (produtos.get(i).getNome().equalsIgnoreCase(nome)) {
+                produtos.remove(i);
+                return true;
+            }
         }
-           }
 
- return false;
+        return false;
 
-}
+    }
 
+    public void procurarProduton(String nome) {
+        String mensagem = "";
+        for (Produto p : produtos) {
 
+            if (p.getNome().equalsIgnoreCase(nome)) {
+                mensagem += p.toString();
+                JOptionPane.showMessageDialog(null, mensagem);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Produto não encontrado.");
 
+    }
+
+    public void procurarProdutoc(int codigo) {
+        String mensagem = "";
+        for (Produto p : produtos) {
+            if (p.getCodigo() == codigo) {
+                mensagem += p.toString();
+                JOptionPane.showMessageDialog(null, mensagem);
+            } else {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+            }
+        }
+    }
+
+    public void AtualizarQuantidade() {
+        String quantStr;
+        boolean valido = false;
+        do {
+            String nome = JOptionPane.showInputDialog(null, "Digite o nome do produto: ");
+            if (nome == null) {
+                JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                return;
+            }
+            else if(nome.matches(".*\\d+.*")){
+                JOptionPane.showMessageDialog(null, "Invalido.");
+                return;
+            }
+            quantStr = JOptionPane.showInputDialog(null, "Nova quantidade: ");
+            if (quantStr == null) {
+                JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                return;
+            }
+           else if (!quantStr.matches(".*\\d+.*")) {
+            JOptionPane.showMessageDialog(null, "Digite apenas numeros.");
+               return;
+            }
+            else{
+            int quant = Integer.parseInt(quantStr);
+            boolean atualizado = atualizarQuant(nome, quant);
+            if (atualizado) {
+                JOptionPane.showMessageDialog(null, "Quantidade Atualizada.");
+                valido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+                return;
+            }
+        }
+        } while (!valido);
+
+    }
+
+    public void ExcrluirProduto() {
+        String nome1;
+        boolean valido = false;
+        do {
+            nome1 = JOptionPane.showInputDialog(null, "Nome produto:");
+            if (nome1 == null) {
+                JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                return;
+            }
+
+            boolean excluir = excluirProduto(nome1);
+
+            if (excluir) {
+                JOptionPane.showMessageDialog(null, "Produto excluido com sucesso!");
+                valido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+                return;
+            }
+        } while (!valido);
+
+    }
+
+    public void BuscarProduto() {
+        String opcaoStr, nome2, codigoStr;
+        int escolha, codigo;
+        do {
+            JOptionPane.showMessageDialog(null, "Escolha como deseja procurar o produto.");
+            opcaoStr = JOptionPane.showInputDialog(null, "1 - Nome\n 2 - Código");
+            if (opcaoStr == null) {
+                JOptionPane.showMessageDialog(null, "Operação cancelada.");
+                return;
+            }
+
+            try {
+                escolha = Integer.parseInt(opcaoStr);
+                if (escolha != 1 && escolha != 2) {
+                    JOptionPane.showMessageDialog(null, "Opção inválida.");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite apenas números.");
+                escolha = 0;
+            }
+        } while (escolha != 1 && escolha != 2);
+
+        switch (escolha) {
+            case 1:
+                nome2 = JOptionPane.showInputDialog(null, "Digite o nome do produto:");
+                if (nome2.matches(".*\\d+.*")) {
+                    JOptionPane.showMessageDialog(null, "Não é permitido numeros.");
+                    break;
+                } else {
+                    procurarProduton(nome2);
+                }
+                break;
+            case 2:
+                codigoStr = JOptionPane.showInputDialog(null, "Digite o código do produto:");
+                if (codigoStr.matches("\\d+")) {
+                    codigo = Integer.parseInt(codigoStr);
+                    procurarProdutoc(codigo);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não é permitido letras no código.");
+                }
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Digite apenas opções validas.");
+                break;
+
+        }
+
+    }
 
 }
